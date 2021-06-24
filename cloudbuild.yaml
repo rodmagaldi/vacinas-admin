@@ -17,10 +17,20 @@ steps:
         --allow-unauthenticated
         --platform managed
         --memory=256Mi
+        --set-env-vars FOREST_ENV_SECRET=$$FOREST_ENV_SECRET
+        --set-env-vars FOREST_AUTH_SECRET=$$FOREST_AUTH_SECRET
+        --set-env-vars APPLICATION_URL=$$APPLICATION_URL
         --set-env-vars DATABASE_URL=$$DATABASE_URL
         --set-env-vars NODE_ENV=$$NODE_ENV",
       ]
-    secretEnv: ["DATABASE_URL", "NODE_ENV"]
+    secretEnv:
+      [
+        "DATABASE_URL",
+        "NODE_ENV",
+        "FOREST_ENV_SECRET",
+        "FOREST_AUTH_SECRET",
+        "APPLICATION_URL",
+      ]
 timeout: 900s
 availableSecrets:
   secretManager:
@@ -28,3 +38,9 @@ availableSecrets:
       env: "DATABASE_URL"
     - versionName: projects/313400536121/secrets/NODE_ENV/versions/latest
       env: "NODE_ENV"
+    - versionName: projects/313400536121/secrets/FOREST_ENV_SECRET/versions/latest
+      env: "FOREST_ENV_SECRET"
+    - versionName: projects/313400536121/secrets/FOREST_AUTH_SECRET/versions/latest
+      env: "FOREST_AUTH_SECRET"
+    - versionName: projects/313400536121/secrets/APPLICATION_URL/versions/latest
+      env: "APPLICATION_URL"
